@@ -5,11 +5,25 @@
     font-size: 100px;
 } */
 
-button {
+#fetchData {
     width: 492px;
     height: 58px;
     font-size: 24px;
     font-weight: 300;
     background-color: white;
     text-align: center;
+}
+
+.btn {
+    background-color: #270846;
+    padding: 5px 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    color: white;
+}
+
+.mg {
+    margin: 10px;
+    font-size: 32px;
+    font-weight: 700;
 }

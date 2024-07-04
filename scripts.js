@@ -4,13 +4,86 @@ const homeScreen = document.getElementsByClassName('home')
 
 fetchBtn.addEventListener('click', function () {
     console.log("I am calling geoLocation...");
-    // getLocation();
+    getLocation();
 
     homeScreen[0].style.display = "none"
+    appScreen[0].style.display = "block"
     // console.log(homeScreen);
 
 })
 
+function getWindDirection(deg) {
+    if (deg >= 337.5 || deg < 22.5) {
+        return 'North';
+    } else if (deg >= 22.5 && deg < 67.5) {
+        return 'North-East';
+    } else if (deg >= 67.5 && deg < 112.5) {
+        return 'East';
+    } else if (deg >= 112.5 && deg < 157.5) {
+        return 'South-East';
+    } else if (deg >= 157.5 && deg < 202.5) {
+        return 'South';
+    } else if (deg >= 202.5 && deg < 247.5) {
+        return 'South-West';
+    } else if (deg >= 247.5 && deg < 292.5) {
+        return 'West';
+    } else if (deg >= 292.5 && deg < 337.5) {
+        return 'North-West';
+    }
+}
+
+async function getWeatherData(lat, long) {
+
+    // const apiKey = '39280627df3e8601df26c45718b1da9c';
+    const apiKey = 'd5e14b4d612f2c570a3448ff071ad2d4';
+    // const lat = 37.7749; // Example latitude
+    // const lon = -122.4194; // Example longitude
+    const part = 'minutely,hourly'; // Parts to exclude from the response
+    const units = "metric"
+
+    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("data", data);
+
+
+        setWeatherData(data)
+
+        // document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+        console.error('Error fetching the weather data:', error);
+    }
+}
+
+function setWeatherData(data) {
+    console.log("Preparing data...");
+    const arr = {
+        "Location": "Asia",
+        "Wind Speed": data?.current.wind_speed + ' kmph',
+        "Humidity": data?.current.humidity,
+        "Time Zone": "GMT +5:30",
+        "Pressure": data?.current.pressure + " mBar",
+        "Wind Direction": getWindDirection(data?.current.wind_deg),
+        "UV Index": data?.current?.uvi,
+        "Feels like": data?.current?.feels_like + "°"
+    }
+    // data?.current
+    console.log(document.getElementById('weatherData'));
+    let dataHtml = ""
+
+    for (const property in arr) {
+        dataHtml += `<button class='btn mg'>${property}: ${arr[property]}</button>`
+    }
+
+    document.getElementById('weatherData').innerHTML = dataHtml;
+    console.log("dataHtml", dataHtml);
+
+}
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -23,7 +96,13 @@ function getLocation() {
 function showPosition(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    // console.log(document.getElementsByClassName('lat'));
+
+    document.getElementsByClassName('lat')[0].innerText = "Lat: " + latitude;
+    document.getElementsByClassName('long')[0].innerText = "Long: " + longitude;
+    document.getElementById('map').src = `https://maps.google.com/maps?q=${latitude}, ${longitude}&z=15&output=embed`
+
+    getWeatherData(latitude, longitude)
 }
 
 function showError(error) {
