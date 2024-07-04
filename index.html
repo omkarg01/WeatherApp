@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Location</title>
+
+    <link rel="stylesheet" href="./styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            /* background-color: #360369; */
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            color: white;
+            /* Center vertically */
+            font-family: Montserrat;
+            /* font-weight: 700;
+            font-size: 100px; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="home"
+        style="background-color: #360369; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; gap: 50px;">
+        <p style="font-weight: 700; font-size: 100px;">Weather Api</p>
+        <button id="fetchData" style="border-radius: 3px;" rel="noopener noreferrer">Fetch Data</button>
+    </div>
+
+    <div class="app" style="background-color: #360369; height: 60vh; padding: 40px; display: none;">
+        <h1>Welcome To The Weather App</h1>
+        <p>Here is your current location</p>
+        <div style="display: flex; justify-content: start;">
+            <button style="background-color: #270846; padding: 5px 30px; font-size: 20px;"> 16265 </button>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

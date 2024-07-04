@@ -1,0 +1,15 @@
+/* body {
+    background-color: #360369;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 100px;
+} */
+
+button {
+    width: 492px;
+    height: 58px;
+    font-size: 24px;
+    font-weight: 300;
+    background-color: white;
+    text-align: center;
+}
